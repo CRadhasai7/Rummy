@@ -20,15 +20,17 @@ public class Play {
 		deck1.shuffle();			// shuffle the deck
 		
 		Discard discard1 = new Discard();
-		
 		Player player1 = new Player(deck1.getStartingHand());	// create new player with a starting hand from the deck
-		player1.getPlayerName();	// sets player name
-		
+		player1.getPlayerName();// sets player name
+		discard1.setTop(deck1.getTopCard());
+		for(int i=0; i<24;i++)
+		{	
 		player1.organizeHand();		// organize the player hand
-		player1.printHand();		// show player hand
+		player1.getName();
+	//	player1.printHand();		// show player hand
 		
-		//while(!knock){
-			discard1.setTop(deck1.getTopCard());
+		
+		  
 			show(discard1.getTop(), "Top Of Discard:");
 			if(player1.deckOrDiscard() == "Discard"){
 				player1.addCard(discard1.takeTop());
@@ -36,13 +38,12 @@ public class Play {
 			else{
 				player1.addCard(deck1.getTopCard());
 			}
-			player1.printHand();
 			discard1.setTop(player1.dropCard());
 			player1.organizeHand();
-			player1.printHand();
+		//	player1.printHand();
+			System.out.println("----------------------------------------------------------------------------------------");
+		}	
 			
-			//computer move
-		//}
 		
 		//deck1.printDeck();
 		
