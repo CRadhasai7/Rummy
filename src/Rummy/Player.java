@@ -13,10 +13,11 @@ public class Player {
 	
 	Player(){};
 	Deck y = new Deck();
+	Discard z = new Discard();
 	
 	Player(Card[] startingHand){
 		this.myHand = startingHand;
-		this.cardCount = 10;
+		this.cardCount = 9;
 	}
 	
 	public void addCard(Card card){
@@ -27,15 +28,139 @@ public class Player {
 		}
 	}
 	
+	public int firstset()
+	{
+		int i=0;
+		
+	
+			if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal() + 1 && this.myHand[i].getShapes().ordinal() == this.myHand[i+1].getShapes().ordinal())
+			{
+				if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal() + 1 && this.myHand[i+1].getShapes().ordinal() == this.myHand[i+2].getShapes().ordinal())
+				{
+					return 1;
+				}
+			}
+			else 
+			{
+				if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal())
+				{
+					if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal())
+					{
+						return 2;
+					}
+				}
+			}
+				
+		return 0;
+	}
+	
+	public int secondset()
+	{
+		int i=3;
+		
+	
+			if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal() + 1 && this.myHand[i].getShapes().ordinal() == this.myHand[i+1].getShapes().ordinal())
+			{
+				if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal() + 1 && this.myHand[i+1].getShapes().ordinal() == this.myHand[i+2].getShapes().ordinal())
+				{
+					return 1;
+				}
+			}
+			else 
+			{
+				if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal())
+				{
+					if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal())
+					{
+						return 2;
+					}
+				}
+			}
+				
+		return 0;
+	}
+	
+	public int thirdset()
+	{
+		int i=6;
+		
+	
+			if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal() + 1 && this.myHand[i].getShapes().ordinal() == this.myHand[i+1].getShapes().ordinal())
+			{
+				if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal() + 1 && this.myHand[i+1].getShapes().ordinal() == this.myHand[i+2].getShapes().ordinal())
+				{
+					return 1;
+				}
+			}
+			else 
+			{
+				if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal())
+				{
+					if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal())
+					{
+						return 2;
+					}
+				}
+			}
+				
+		return 0;
+	}
+	
+	
+	public void win()
+	{
+		int set1 = firstset();
+		int set2 = secondset();
+		int set3 = thirdset();
+		if(set1 ==1)
+		{    
+			    
+				System.out.println("SET 1 -  first 3cards is SEQUENCE ");
+		}
+		else if(set1 == 2)
+		{
+			System.out.println("SET 1 -  first 3cards is TRIPLET ");	
+		}
+		
+		if(set2 ==1)
+		{    
+			    
+				System.out.println("SET 2 -  middle 3cards is SEQUENCE ");
+		}
+		else if(set2 == 2)
+		{
+			System.out.println("SET 2 -  middle 3cards is TRIPLET ");	
+		}
+		
+		if(set3 ==1)
+		{    
+			    
+				System.out.println("SET 3 -  last 3cards is SEQUENCE ");
+		}
+		else if(set3 == 2)
+		{
+			System.out.println("SET 3 -  last 3cards is TRIPLET ");	
+		}
+		
+		if(set1 ==1 | set1 ==2 && set2 == 1 | set2 ==2  && set3 ==1 | set3 ==2  )
+		{    
+			    
+				System.out.println("YOU WON THE GAME");
+		}
+		
+	}
+	
+	
 	public Card dropCard(){
 		System.out.println("Please enter # of card you would like to drop: ");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			int drop = Integer.parseInt(br.readLine())-1;
 			Card temp = myHand[drop];
-			myHand[drop] = myHand[10];
-			myHand[10] = null;
+			myHand[drop] = myHand[9];
+			myHand[9] = null;
 			this.cardCount--;
+			z.setTop(temp);
 			this.clearStraights();
 			this.organizeHand();
 			return(temp);
@@ -102,6 +227,9 @@ public class Player {
 		}
 		findOfAKinds();
 		findStraights();
+		printHand();
+		win();
+		
 	}
 	
 	public void findOfAKinds(){
