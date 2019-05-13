@@ -10,6 +10,7 @@ public class Player {
 	private Card[][] ofAKinds = new Card[3][4];
 	private int straightCount = 0;
 	private int ofAKindCount = 0;
+	public boolean won_the_game = false;
 	
 	Player(){};
 	Deck y = new Deck();
@@ -33,9 +34,9 @@ public class Player {
 		int i=0;
 		
 	
-			if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal() + 1 && this.myHand[i].getShapes().ordinal() == this.myHand[i+1].getShapes().ordinal())
+			if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal() + 1 & this.myHand[i].getShapes().ordinal() == this.myHand[i+1].getShapes().ordinal())
 			{
-				if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal() + 1 && this.myHand[i+1].getShapes().ordinal() == this.myHand[i+2].getShapes().ordinal())
+				if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal() + 1 & this.myHand[i+1].getShapes().ordinal() == this.myHand[i+2].getShapes().ordinal())
 				{
 					return 1;
 				}
@@ -59,9 +60,9 @@ public class Player {
 		int i=3;
 		
 	
-			if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal() + 1 && this.myHand[i].getShapes().ordinal() == this.myHand[i+1].getShapes().ordinal())
+			if(this.myHand[i].getRank().ordinal() + 1 == this.myHand[i+1].getRank().ordinal() & this.myHand[i].getShapes().ordinal() == this.myHand[i+1].getShapes().ordinal())
 			{
-				if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal() + 1 && this.myHand[i+1].getShapes().ordinal() == this.myHand[i+2].getShapes().ordinal())
+				if(this.myHand[i+1].getRank().ordinal() + 1 == this.myHand[i+2].getRank().ordinal() & this.myHand[i+1].getShapes().ordinal() == this.myHand[i+2].getShapes().ordinal())
 				{
 					return 1;
 				}
@@ -85,9 +86,9 @@ public class Player {
 		int i=6;
 		
 	
-			if(this.myHand[i].getRank().ordinal() == this.myHand[i+1].getRank().ordinal() + 1 && this.myHand[i].getShapes().ordinal() == this.myHand[i+1].getShapes().ordinal())
+			if(this.myHand[i].getRank().ordinal() + 1 == this.myHand[i+1].getRank().ordinal() & this.myHand[i].getShapes().ordinal() == this.myHand[i+1].getShapes().ordinal())
 			{
-				if(this.myHand[i+1].getRank().ordinal() == this.myHand[i+2].getRank().ordinal() + 1 && this.myHand[i+1].getShapes().ordinal() == this.myHand[i+2].getShapes().ordinal())
+				if(this.myHand[i+1].getRank().ordinal() + 1 == this.myHand[i+2].getRank().ordinal() & this.myHand[i+1].getShapes().ordinal() == this.myHand[i+2].getShapes().ordinal())
 				{
 					return 1;
 				}
@@ -146,6 +147,7 @@ public class Player {
 		{    
 			    
 				System.out.println("YOU WON THE GAME");
+				won_the_game = true;
 		}
 		
 	}
@@ -234,8 +236,7 @@ public class Player {
 	
 	public void findOfAKinds(){
 		for(int i=0; i < this.cardCount; i++){
-			
-		}
+	}
 	}
 	
 	public void findStraights(){
@@ -325,9 +326,31 @@ public class Player {
 		this.ofAKindCount++;
 	}
 	
-	/*public int countPoints(){
-		
-	}*/
+	public int countPoints(){
+		int x = 0;
+		for(int i=0; i<9; i++) {
+			 x += this.myHand[i].getRank().ordinal();
+		}
+		int s1 = firstset();
+		int s2 = secondset();
+		int s3 = thirdset();
+		if(s1 == 1 | s1 == 2) {
+			for(int i=0; i<3; i++) {
+				x -= this.myHand[i].getRank().ordinal();
+			}
+		}
+		if(s2 == 1 | s1 == 2) {
+				for(int i=3; i<6; i++) {
+					x -= this.myHand[i].getRank().ordinal();
+				}
+		}
+		if(s3 == 1 | s1 == 2) {
+					for(int i=6; i<9; i++) {
+						x -= this.myHand[i].getRank().ordinal();
+					}
+		}
+		return x;
+	}
 	
 	public String deckOrDiscard(){
 		System.out.println("Please enter 1 to pick up from discard \n" + 
@@ -340,5 +363,26 @@ public class Player {
 		catch (IOException ioe) {
 			return("IO error trying to read your choice!");
 		}
+	}
+	public void swap() {
+		System.out.println("Please enter 1 if you would like to swap cards \n" + 
+				"2 to continue");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			int answer = Integer.parseInt(br.readLine());
+			if(answer==1){
+				System.out.println("1st position");
+				int i = Integer.parseInt(br.readLine());
+				System.out.println("2nd position");
+				int j = Integer.parseInt(br.readLine());
+				Card temp = new Card();
+				temp = this.myHand[i];
+				this.myHand[i] = this.myHand[j];
+				this.myHand[j] = temp;
+				} 
+			}	catch (IOException ioe) {
+				System.out.println("IO error trying to read your choice!");
+			}
+			
 	}
 }
